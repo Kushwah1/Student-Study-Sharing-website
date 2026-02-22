@@ -1,6 +1,6 @@
 # Student Notes Sharing Website
 
-Link: https://student-study-sharing-website.onrender.com/
+Project Live Link: https://student-study-sharing-website.onrender.com/
 
 A full-stack web application for students to share, search, and download academic notes.
 
