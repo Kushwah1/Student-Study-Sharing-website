@@ -1,0 +1,21 @@
+# Render.com Deployment Configuration
+# This file auto-configures the service when deploying to Render
+
+services:
+  - type: web
+    name: student-notes-sharing
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false  # Set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true  # Auto-generate a secure random value
+      - key: JWT_EXPIRE
+        value: 7d
+      - key: MAX_FILE_SIZE
+        value: 10485760
