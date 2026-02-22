@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – StudyShare</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-book-open"></i>
+        <span>StudyShare</span>
+      </a>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="browse.html" class="nav-link">Browse Notes</a></li>
+        <li id="navDashboard" style="display:none;"><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+        <li id="navAdmin" style="display:none;"><a href="admin.html" class="nav-link">Admin</a></li>
+        <li id="navLogin"><a href="login.html" class="nav-link btn-nav">Login</a></li>
+        <li id="navSignup"><a href="signup.html" class="nav-link btn-nav btn-nav-outline">Sign Up</a></li>
+        <li id="navLogout" style="display:none;">
+          <a href="#" class="nav-link btn-nav btn-nav-outline" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Dashboard Section                            -->
+  <!-- ============================================ -->
+  <section class="dashboard-section">
+    <div class="container">
+      <!-- Welcome header -->
+      <div class="page-header">
+        <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+        <p>Welcome back, <span id="userName">User</span>!</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="myNotesCount">0</h3>
+            <p>Notes Uploaded</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+            <i class="fas fa-download"></i>
+          </div>
+          <div class="stat-card-info">
+            <h3 id="myDownloads">0</h3>
+            <p>Total Downloads</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="upload-section" id="uploadSection">
+        <h2><i class="fas fa-cloud-upload-alt"></i> Upload New Note</h2>
+
+        <div class="alert" id="uploadAlert" style="display:none;"></div>
+
+        <form id="uploadForm" class="upload-form" enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="noteTitle"><i class="fas fa-heading"></i> Title</label>
+              <input type="text" id="noteTitle" placeholder="e.g., Chapter 5 – Thermodynamics" required>
+            </div>
+            <div class="form-group">
+              <label for="noteSubject"><i class="fas fa-tag"></i> Subject</label>
+              <select id="noteSubject" required>
+                <option value="">Select Subject</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Biology">Biology</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="English">English</option>
+                <option value="History">History</option>
+                <option value="Geography">Geography</option>
+                <option value="Economics">Economics</option>
+                <option value="Business Studies">Business Studies</option>
+                <option value="Accounting">Accounting</option>
+                <option value="Psychology">Psychology</option>
+                <option value="Sociology">Sociology</option>
+                <option value="Political Science">Political Science</option>
+                <option value="Engineering">Engineering</option>
+                <option value="Medical">Medical</option>
+                <option value="Law">Law</option>
+                <option value="Arts">Arts</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="noteDescription"><i class="fas fa-align-left"></i> Description</label>
+            <textarea id="noteDescription" rows="3" placeholder="Brief description of the notes content..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-file-upload"></i> File (PDF, Image, Doc, PPT, XLS, TXT – max 10MB)</label>
+            <div class="file-upload-area" id="fileUploadArea">
+              <input type="file" id="noteFile" accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt" required>
+              <div class="file-upload-content">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop your file here or <strong>click to browse</strong></p>
+                <span class="file-name" id="fileName">No file selected</span>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="uploadBtn">
+            <i class="fas fa-upload"></i> Upload Note
+          </button>
+        </form>
+      </div>
+
+      <!-- My Notes Section -->
+      <div class="my-notes-section">
+        <h2><i class="fas fa-folder"></i> My Uploaded Notes</h2>
+
+        <div class="notes-grid" id="myNotesGrid">
+          <!-- Dynamically loaded -->
+        </div>
+
+        <div class="loading" id="loading" style="display:none;">
+          <i class="fas fa-spinner fa-spin fa-3x"></i>
+          <p>Loading your notes...</p>
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h3>No Notes Yet</h3>
+          <p>Upload your first note using the form above!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 StudyShare. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

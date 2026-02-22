@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyShare – Student Notes Sharing Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- ============================================ -->
+  <!-- Navigation Bar                               -->
+  <!-- ============================================ -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-book-open"></i>
+        <span>StudyShare</span>
+      </a>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="browse.html" class="nav-link">Browse Notes</a></li>
+        <li id="navDashboard" style="display:none;"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li id="navAdmin" style="display:none;"><a href="admin.html" class="nav-link">Admin</a></li>
+        <li id="navLogin"><a href="login.html" class="nav-link btn-nav">Login</a></li>
+        <li id="navSignup"><a href="signup.html" class="nav-link btn-nav btn-nav-outline">Sign Up</a></li>
+        <li id="navLogout" style="display:none;">
+          <a href="#" class="nav-link btn-nav btn-nav-outline" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Hero Section                                 -->
+  <!-- ============================================ -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Share Knowledge,<br><span class="highlight">Ace Your Exams</span></h1>
+      <p>The ultimate platform for students to upload, share, and discover academic notes. Access quality study material across all subjects, completely free.</p>
+      <div class="hero-buttons">
+        <a href="browse.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-search"></i> Browse Notes
+        </a>
+        <a href="signup.html" class="btn btn-outline btn-lg" id="heroSignup">
+          <i class="fas fa-user-plus"></i> Get Started
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number" id="statNotes">0</span>
+          <span class="stat-label">Notes Shared</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="statUsers">0</span>
+          <span class="stat-label">Students</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number" id="statDownloads">0</span>
+          <span class="stat-label">Downloads</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-illustration">
+      <div class="floating-card card-1">
+        <i class="fas fa-file-pdf"></i>
+        <span>Physics Notes</span>
+      </div>
+      <div class="floating-card card-2">
+        <i class="fas fa-file-word"></i>
+        <span>CS Algorithms</span>
+      </div>
+      <div class="floating-card card-3">
+        <i class="fas fa-file-image"></i>
+        <span>Math Formulas</span>
+      </div>
+      <div class="floating-card card-4">
+        <i class="fas fa-file-powerpoint"></i>
+        <span>History Slides</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- Features Section                             -->
+  <!-- ============================================ -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why StudyShare?</h2>
+      <p class="section-subtitle">Everything you need to supercharge your studies</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-upload"></i></div>
+          <h3>Easy Upload</h3>
+          <p>Upload PDFs, images, Word docs, and presentations in seconds with our drag-and-drop interface.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-folder-open"></i></div>
+          <h3>Subject Categories</h3>
+          <p>Notes organized by subjects – Mathematics, Science, Computer Science, Arts, and more.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-search"></i></div>
+          <h3>Smart Search</h3>
+          <p>Find exactly what you need with powerful search across titles, descriptions, and subjects.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-download"></i></div>
+          <h3>Free Downloads</h3>
+          <p>Download any notes for free. Study offline anytime, anywhere without restrictions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Secure Platform</h3>
+          <p>Your account is protected with encrypted passwords and secure authentication.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+          <h3>Responsive Design</h3>
+          <p>Access from any device – desktop, tablet, or mobile. Study on the go!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- Subjects Section                             -->
+  <!-- ============================================ -->
+  <section class="subjects-section">
+    <div class="container">
+      <h2 class="section-title">Browse by Subject</h2>
+      <p class="section-subtitle">Find notes organized by your favorite subjects</p>
+      <div class="subjects-grid">
+        <a href="browse.html?subject=Mathematics" class="subject-card">
+          <i class="fas fa-calculator"></i><span>Mathematics</span>
+        </a>
+        <a href="browse.html?subject=Physics" class="subject-card">
+          <i class="fas fa-atom"></i><span>Physics</span>
+        </a>
+        <a href="browse.html?subject=Chemistry" class="subject-card">
+          <i class="fas fa-flask"></i><span>Chemistry</span>
+        </a>
+        <a href="browse.html?subject=Biology" class="subject-card">
+          <i class="fas fa-dna"></i><span>Biology</span>
+        </a>
+        <a href="browse.html?subject=Computer Science" class="subject-card">
+          <i class="fas fa-laptop-code"></i><span>Computer Science</span>
+        </a>
+        <a href="browse.html?subject=English" class="subject-card">
+          <i class="fas fa-pen-fancy"></i><span>English</span>
+        </a>
+        <a href="browse.html?subject=History" class="subject-card">
+          <i class="fas fa-landmark"></i><span>History</span>
+        </a>
+        <a href="browse.html?subject=Economics" class="subject-card">
+          <i class="fas fa-chart-line"></i><span>Economics</span>
+        </a>
+        <a href="browse.html?subject=Engineering" class="subject-card">
+          <i class="fas fa-cogs"></i><span>Engineering</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- CTA Section                                  -->
+  <!-- ============================================ -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Share Your Notes?</h2>
+      <p>Join thousands of students sharing knowledge and helping each other succeed.</p>
+      <a href="signup.html" class="btn btn-primary btn-lg" id="ctaSignup">
+        <i class="fas fa-rocket"></i> Join StudyShare Today
+      </a>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- Footer                                       -->
+  <!-- ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3><i class="fas fa-book-open"></i> StudyShare</h3>
+          <p>Empowering students to learn together through shared knowledge.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <a href="index.html">Home</a>
+          <a href="browse.html">Browse Notes</a>
+          <a href="signup.html">Sign Up</a>
+          <a href="login.html">Login</a>
+        </div>
+        <div class="footer-links">
+          <h4>Subjects</h4>
+          <a href="browse.html?subject=Mathematics">Mathematics</a>
+          <a href="browse.html?subject=Computer Science">Computer Science</a>
+          <a href="browse.html?subject=Physics">Physics</a>
+          <a href="browse.html?subject=Engineering">Engineering</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 StudyShare. All rights reserved. Built for students, by students.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================ -->
+  <!-- Scripts                                      -->
+  <!-- ============================================ -->
+  <script src="js/auth.js"></script>
+  <script>
+    // Update navigation based on login state
+    updateNav();
+
+    // Load homepage stats
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/notes');
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('statNotes').textContent = data.total || 0;
+        }
+      } catch (e) {
+        // Stats are optional, fail silently
+      }
+    }
+    loadStats();
+  </script>
+</body>
+</html>

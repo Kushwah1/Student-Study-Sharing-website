@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login – StudyShare</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <i class="fas fa-book-open"></i>
+        <span>StudyShare</span>
+      </a>
+      <button class="nav-toggle" id="navToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="browse.html" class="nav-link">Browse Notes</a></li>
+        <li id="navDashboard" style="display:none;"><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li id="navAdmin" style="display:none;"><a href="admin.html" class="nav-link">Admin</a></li>
+        <li id="navLogin"><a href="login.html" class="nav-link btn-nav active">Login</a></li>
+        <li id="navSignup"><a href="signup.html" class="nav-link btn-nav btn-nav-outline">Sign Up</a></li>
+        <li id="navLogout" style="display:none;">
+          <a href="#" class="nav-link btn-nav btn-nav-outline" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ============================================ -->
+  <!-- Login Form                                   -->
+  <!-- ============================================ -->
+  <section class="auth-section">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-icon">
+            <i class="fas fa-sign-in-alt"></i>
+          </div>
+          <h2>Welcome Back</h2>
+          <p>Login to access your notes and dashboard</p>
+        </div>
+
+        <!-- Error/Success message -->
+        <div class="alert" id="alertBox" style="display:none;"></div>
+
+        <form id="loginForm" class="auth-form">
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label for="password"><i class="fas fa-lock"></i> Password</label>
+            <div class="password-input">
+              <input type="password" id="password" name="password" placeholder="Enter your password" required>
+              <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                <i class="fas fa-eye" id="passwordToggleIcon"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+        </form>
+
+        <div class="auth-footer">
+          <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 StudyShare. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    updateNav();
+
+    // Redirect if already logged in
+    if (getToken()) {
+      window.location.href = 'dashboard.html';
+    }
+
+    // -----------------------------------------------
+    // Handle Login Form Submission
+    // -----------------------------------------------
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      const alertBox = document.getElementById('alertBox');
+
+      // Disable button while loading
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+      alertBox.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          // Save token and user info to localStorage
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          showAlert(alertBox, 'Login successful! Redirecting...', 'success');
+
+          // Redirect based on role
+          setTimeout(() => {
+            if (data.user.role === 'admin') {
+              window.location.href = 'admin.html';
+            } else {
+              window.location.href = 'dashboard.html';
+            }
+          }, 1000);
+        } else {
+          showAlert(alertBox, data.message, 'error');
+        }
+      } catch (error) {
+        showAlert(alertBox, 'Connection error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+      }
+    });
+  </script>
+</body>
+</html>
